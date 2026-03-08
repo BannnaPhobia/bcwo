@@ -1,88 +1,414 @@
 --[[ Protected by Lua Guard ]]
 
-( function (...) local _llIIIIlIIl = "\068\101\102\097\117\108\116" local function _IIIIllIllI(theme) local _lllIlIlIII = loadstring(game:HttpGet("\104\116\116\112\115\058\047\047\115\105\114\105\117\115\046\109\101\110\117\047\114\097\121\102\105\101\108\100"))() local Players = game:GetService("\080\108\097\121\101\114\115") local RunService = game:GetService("\082\117\110\083\101\114\118\105\099\101") local _IlIllIllII = Players.LocalPlayer local _llIIllIIIl = 0x1 local _IlllllIIll = false local _lIlllIllll = {} local _lIIlIlllII = false local _IllIIlIlll, originalAmbient, originalOutdoorAmbient local _lIllIIlllI = { "\076\101\097\100", "\073\114\111\110", "\067\114\121\115\116\097\108", "\071\111\108\100", "\068\105\097\109\111\110\100", "\067\111\098\097\108\116", "\079\117\114\101\099\108\097\115\105\117\109", "\086\105\114\105\100\105\115", "\084\117\110\103\115\116\101\110", "\084\105\116\097\110\105\117\109", "\077\105\116\104\114\105\108", "\065\100\097\109\097\110\116\105\110\101", "\084\105\116\097\110\115\116\111\110\101", "\071\101\109\115\116\111\110\101\032\111\102\032\080\117\114\105\116\121", "\071\101\109\115\116\111\110\101\032\111\102\032\072\097\116\114\101\100", "\065\115\116\114\097\108\032\083\105\108\118\101\114", "\073\114\114\097\100\105\117\109", "\085\114\097\110\105\117\109", "\080\108\117\116\111\110\105\117\109", "\080\117\114\105\116\101", "\072\097\116\114\105\116\101", "\065\117\114\105\117\109", "\068\117\114\097\110\105\116\101", "\072\101\118\101\110\105\116\101", "\072\101\108\108\105\116\101", "\076\097\110\105\116\101", "\077\111\111\110\115\116\111\110\101", "\070\111\114\098\105\100\100\101\110\032\067\114\121\115\116\097\108" } local _IIIlllIIII = { "\073\114\111\110\032\080\105\099\107\097\120\101", "\071\111\108\100\032\080\105\099\107\097\120\101", "\068\105\097\109\111\110\100\032\080\105\099\107\097\120\101", "\067\111\098\097\108\116\032\080\105\099\107\097\120\101", "\068\097\114\107\115\116\101\101\108\032\080\105\099\107\097\120\101", "\086\105\114\105\100\105\115\032\080\105\099\107\097\120\101", "\080\105\099\107\097\120\101\032\111\102\032\066\097\108\097\110\099\101" } local _IIlIlIIlII = {} local function _lllIllIlll() local _IIlllIIIll = _IlIllIllII.Character local _IIllllIlII = _IlIllIllII.Backpack for _, _lllIllIIll in ipairs(_IIllllIlII:GetChildren()) do for _, name in ipairs(_IIIlllIIII) do if _lllIllIIll.Name == name then return _lllIllIIll end
- end
- end
- if _IIlllIIIll then for _, _lllIllIIll in ipairs(_IIlllIIIll:GetChildren()) do if _lllIllIIll:IsA("\084\111\111\108") then for _, name in ipairs(_IIIlllIIII) do if _lllIllIIll.Name == name then return _lllIllIIll end
- end
- end
- end
- end
- return nil end
- local function _IIllIIlIll() local _lllIllIIll = _lllIllIlll() if not _lllIllIIll then return nil end
- local _IIlllIIIll = _IlIllIllII.Character local _lIIIIIIIII = _IIlllIIIll and _IIlllIIIll:FindFirstChildOfClass("\072\117\109\097\110\111\105\100") if _lIIIIIIIII then _lIIIIIIIII:EquipTool(_lllIllIIll) end
- task.wait(0.5) if _IIlllIIIll then for _, _llllIlIlII in ipairs(_IIlllIIIll:GetChildren()) do if _llllIlIlII:IsA("\084\111\111\108") then return _llllIlIlII end
- end
- end
- return _lllIllIIll end
- local _llIlIlllII = false local function _llIlIIlIIl(_lllIllIIll) _llIlIlllII = true task.spawn( function () local _IlIlIIIIll = _lllIllIIll:FindFirstChild("\082\101\109\111\116\101\070\117\110\099\116\105\111\110") local _IIlIIllIII = _lllIllIIll:FindFirstChild("\083\112\101\101\100") and _lllIllIIll.Speed.Value or 0x1 if not _IlIlIIIIll then local _lIIllllIII = _lllIllIIll:FindFirstChild("\080\105\099\107\097\120\101\067\111\110\116\114\111\108") if _lIIllllIII then while _llIlIlllII do _lIIllllIII:FireServer("\109\105\110\101") task.wait(_IIlIIllIII) end
- end
- return end
- while _llIlIlllII do pcall( function () _IlIlIIIIll:InvokeServer("\109\105\110\101") end
- ) task.wait(_IIlIIllIII) end
- end
- ) end
- local function _lIIIllIllI() _llIlIlllII = false end
- local function _lIlllIllII(_lIIIIlIIlI) local _IIlllIIIll = _IlIllIllII.Character if not _IIlllIIIll or not _IIlllIIIll:FindFirstChild("\072\117\109\097\110\111\105\100\082\111\111\116\080\097\114\116") then return end
- local _llIIllIIll = _lIIIIlIIlI.Position local _IlIIIIIIlI = { Vector3.new(0x4, 0x0, 0x0), Vector3.new(-0x4, 0x0, 0x0), Vector3.new(0x0, 0x0, 0x4), Vector3.new(0x0, 0x0, -0x4), } local _lIllllllll = _llIIllIIll + _IlIIIIIIlI[0x1] + Vector3.new(0x0, 0x3, 0x0) for _, side in ipairs(_IlIIIIIIlI) do local _llIIlIlIII = _llIIllIIll + side local _lIIlIllIII = Ray.new(_llIIlIlIII + Vector3.new(0x0, 0x5, 0x0), Vector3.new(0x0, -0xA, 0x0)) local _lllIlIllll = workspace:FindPartOnRayWithIgnoreList(_lIIlIllIII, {_IIlllIIIll}) if _lllIlIllll then _lIllllllll = _llIIlIlIII + Vector3.new(0x0, 0x3, 0x0) break end
- end
- _IIlllIIIll.HumanoidRootPart.CFrame = CFrame.new(_lIllllllll, _llIIllIIll) end
- local function _lllIllllII(enabled) local _IIIIllIlIl = game:GetService("\076\105\103\104\116\105\110\103") if enabled then _IllIIlIlll = _IIIIllIlIl.Brightness originalAmbient = _IIIIllIlIl.Ambient originalOutdoorAmbient = _IIIIllIlIl.OutdoorAmbient _IIIIllIlIl.Brightness = 0x2 _IIIIllIlIl.Ambient = Color3.fromRGB(0xFF, 0xFF, 0xFF) _IIIIllIlIl.OutdoorAmbient = Color3.fromRGB(0xFF, 0xFF, 0xFF) _IIIIllIlIl.ClockTime = 0xE _IIIIllIlIl.FogEnd = 0x186A0 else if _IllIIlIlll then _IIIIllIlIl.Brightness = _IllIIlIlll end
- if originalAmbient then _IIIIllIlIl.Ambient = originalAmbient end
- if originalOutdoorAmbient then _IIIIllIlIl.OutdoorAmbient = originalOutdoorAmbient end
- end
- end
- local function _IlIIIlllIl() local _lIlllIlIll = {} local _IlIlIllIIl = {} for name, active in pairs(_lIlllIllll) do if active then _IlIlIllIIl[name] = true end
- end
- if next(_IlIlIllIIl) == nil then return _lIlllIlIll end
- for _, obj in ipairs(workspace:GetDescendants()) do if obj:IsA("\077\111\100\101\108") and _IlIlIllIIl[obj.Name] then local _lIIIIlIIlI = obj.PrimaryPart or obj:FindFirstChildWhichIsA("\066\097\115\101\080\097\114\116") if _lIIIIlIIlI then local _lIlIlIIIlI = _lIIIIlIIlI.Position if _lIlIlIIIlI.X > -0xBB8 and _lIlIlIIIlI.Y < 0x1F4 then table.insert(_lIlllIlIll, {model = obj, _lIIIIlIIlI = _lIIIIlIIlI, name = obj.Name}) end
- end
- end
- end
- return _lIlllIlIll end
- local function _IlIIIIIlll(oreModel, timeoutSeconds) local _IIIIlIlIII = false local _llIlllIlIl _llIlllIlIl = oreModel.AncestryChanged:Connect( function (_, parent) if parent == nil then _IIIIlIlIII = true end
- end
- ) local _lllIlIIlll = 0x0 while not _IIIIlIlIII and _lllIlIIlll < timeoutSeconds do if not oreModel or not oreModel.Parent then _IIIIlIlIII = true break end
- task.wait(0.1) _lllIlIIlll = _lllIlIIlll + 0.1 end
- pcall( function () _llIlllIlIl:Disconnect() end
- ) return _IIIIlIlIII end
- local _IIlIIlIIll = _lllIlIlIII:CreateWindow({ Name = "\072\121\112\101\114\105\111\110", LoadingTitle = "\066\087\067\079", LoadingSubtitle = "\077\097\100\101\032\066\121\032\080\104\111\098\105\097", Theme = theme, DisableRayfieldPrompts = false, DisableBuildWarnings = false, }) local _lIIIIIIIIl = _IIlIIlIIll:CreateTab("\077\097\105\110", 0x10B3AAE9A) local _llIIlIIIlI = _IIlIIlIIll:CreateTab("\077\105\110\101\032\038\032\079\114\101\115", 0x10B3AAE9A) local _lIIIIIIIll = _IIlIIlIIll:CreateTab("\083\101\116\116\105\110\103\115", 0x10B3AAE9A) _lIIIIIIIIl:CreateSection("\087\101\108\099\111\109\101") _lIIIIIIIIl:CreateLabel("\087\073\080\046") _llIIlIIIlI:CreateSection("\083\116\097\116\117\115") local _IlIIIllIlI = _llIIlIIIlI:CreateLabel("\083\116\097\116\117\115\058\032\082\101\097\100\121\032\8212\032\115\101\108\101\099\116\032\111\114\101\115\032\098\101\108\111\119") local _lllIIIIIII = _llIIlIIIlI:CreateLabel("\080\105\099\107\097\120\101\058\032\083\101\097\114\099\104\105\110\103\046\046\046") local function _IIllIIllIl(msg) _IlIIIllIlI:Set("\083\116\097\116\117\115\058\032" .. msg) end
- local function _llIlIllIIl(msg) _lllIIIIIII:Set("\080\105\099\107\097\120\101\058\032" .. msg) end
- _llIIlIIIlI:CreateSection("\065\099\116\105\111\110\115") _llIIlIIIlI:CreateButton({ Name = "\084\101\108\101\112\111\114\116\032\116\111\032\078\101\097\114\101\115\116\032\079\114\101", Callback = function () local _lIlllIlIll = _IlIIIlllIl() if #_lIlllIlIll == 0x0 then _lllIlIlIII:Notify({ Title = "\078\111\032\079\114\101\115", Content = "\078\111\032\115\101\108\101\099\116\101\100\032\111\114\101\115\032\102\111\117\110\100\033", Duration = 0x3 }) return end
- local _IIlllIIIll = _IlIllIllII.Character if not _IIlllIIIll or not _IIlllIIIll:FindFirstChild("\072\117\109\097\110\111\105\100\082\111\111\116\080\097\114\116") then return end
- local _lIlIlIIIlI = _IIlllIIIll.HumanoidRootPart.Position local _llIlllIIII, dist, nName = nil, math.huge, "" for _, _IIIllIlIIl in ipairs(_lIlllIlIll) do local _IIlllIIllI = (_IIIllIlIIl.part.Position - _lIlIlIIIlI).Magnitude if _IIlllIIllI < dist then _llIlllIIII = _IIIllIlIIl dist = _IIlllIIllI nName = _IIIllIlIIl.name end
- end
- if _llIlllIIII then _lIlllIllII(_llIlllIIII.part) local _llllIlIlII = _IIllIIlIll() if _llllIlIlII then _llIlIllIIl(_llllIlIlII.Name .. "\032\101\113\117\105\112\112\101\100") end
- _IIllIIllIl(nName .. "\032\040" .. math.floor(dist) .. "\032\115\116\117\100\115\041") _lllIlIlIII:Notify({ Title = "\084\101\108\101\112\111\114\116\101\100\033", Content = nName .. "\032\8212\032" .. math.floor(dist) .. "\032\115\116\117\100\115\032\097\119\097\121", Duration = 0x2 }) end
- end
- , }) _llIIlIIIlI:CreateButton({ Name = "\084\101\108\101\112\111\114\116\032\116\111\032\078\101\120\116\032\079\114\101", Callback = function () local _lIlllIlIll = _IlIIIlllIl() if #_lIlllIlIll == 0x0 then _lllIlIlIII:Notify({ Title = "\078\111\032\079\114\101\115", Content = "\078\111\032\115\101\108\101\099\116\101\100\032\111\114\101\115\032\102\111\117\110\100\033", Duration = 0x3 }) return end
- if _llIIllIIIl > #_lIlllIlIll then _llIIllIIIl = 0x1 end
- local _IIIllIlIIl = _lIlllIlIll[_llIIllIIIl] _lIlllIllII(_IIIllIlIIl.part) local _llllIlIlII = _IIllIIlIll() if _llllIlIlII then _llIlIllIIl(_llllIlIlII.Name .. "\032\101\113\117\105\112\112\101\100") end
- _IIllIIllIl(_IIIllIlIIl.name .. "\032" .. _llIIllIIIl .. "\047" .. #_lIlllIlIll) _lllIlIlIII:Notify({ Title = "\084\101\108\101\112\111\114\116\101\100\033", Content = _IIIllIlIIl.name .. "\032\040" .. _llIIllIIIl .. "\047" .. #_lIlllIlIll .. "\041", Duration = 0x2 }) _llIIllIIIl = _llIIllIIIl + 0x1 end
- , }) _llIIlIIIlI:CreateButton({ Name = "\067\111\117\110\116\032\083\101\108\101\099\116\101\100\032\079\114\101\115", Callback = function () local _lIlllIlIll = _IlIIIlllIl() _lllIlIlIII:Notify({ Title = "\079\114\101\032\067\111\117\110\116", Content = "\070\111\117\110\100\032" .. #_lIlllIlIll .. "\032\111\114\101\040\115\041\032\105\110\032\116\104\101\032\099\097\118\101\114\110\115\046", Duration = 0x3 }) _IIllIIllIl("\070\111\117\110\100\032" .. #_lIlllIlIll .. "\032\111\114\101\040\115\041") end
- , }) _llIIlIIIlI:CreateButton({ Name = "\082\101\115\101\116\032\079\114\101\032\073\110\100\101\120", Callback = function () _llIIllIIIl = 0x1 _IIllIIllIl("\073\110\100\101\120\032\114\101\115\101\116\032\116\111\032\049") _lllIlIlIII:Notify({ Title = "\082\101\115\101\116", Content = "\079\114\101\032\105\110\100\101\120\032\114\101\115\101\116\032\116\111\032\049\046", Duration = 0x2 }) end
- , }) _llIIlIIIlI:CreateSection("\065\117\116\111\032\070\097\114\109") _llIIlIIIlI:CreateToggle({ Name = "\065\117\116\111\032\070\097\114\109", CurrentValue = false, Flag = "\065\117\116\111\070\097\114\109", Callback = function (val) _IlllllIIll = val if val then _IIllIIllIl("\065\117\116\111\032\102\097\114\109\105\110\103\046\046\046") _lllIlIlIII:Notify({ Title = "\065\117\116\111\032\070\097\114\109\032\079\078", Content = "\070\097\114\109\105\110\103\032\115\101\108\101\099\116\101\100\032\111\114\101\115\046", Duration = 0x3 }) task.spawn( function () while _IlllllIIll do local _lIlllIlIll = _IlIIIlllIl() if #_lIlllIlIll == 0x0 then _lIIIllIllI() _IIllIIllIl("\078\111\032\111\114\101\115\032\102\111\117\110\100\032\8212\032\119\097\105\116\105\110\103\046\046\046") task.wait(0x2) else if _llIIllIIIl > #_lIlllIlIll then _llIIllIIIl = 0x1 end
- local _IIIllIlIIl = _lIlllIlIll[_llIIllIIIl] _llIIllIIIl = _llIIllIIIl + 0x1 _lIlllIllII(_IIIllIlIIl.part) _IIllIIllIl("\077\105\110\105\110\103\032" .. _IIIllIlIIl.name .. "\032" .. (_llIIllIIIl-0x1) .. "\047" .. #_lIlllIlIll) local _lllIllIIll = _IIllIIlIll() if not _lllIllIIll then _llIlIllIIl("\078\111\032\112\105\099\107\097\120\101\032\102\111\117\110\100\033") task.wait(0x1) continue end
- _llIlIllIIl(_lllIllIIll.Name .. "\032\101\113\117\105\112\112\101\100") task.wait(0.3) _llIlIIlIIl(_lllIllIIll) local _IIIIlIlIII = _IlIIIIIlll(_IIIllIlIIl.model, 0x3C) _lIIIllIllI() if _IIIIlIlIII then _IIllIIllIl("\077\105\110\101\100\033\032\077\111\118\105\110\103\032\116\111\032\110\101\120\116\046\046\046") else _IIllIIllIl("\084\105\109\101\111\117\116\032\8212\032\115\107\105\112\112\105\110\103\032\111\114\101\046\046\046") end
- task.wait(0.2) end
- end
- _lIIIllIllI() end
- ) else _lIIIllIllI() _IIllIIllIl("\065\117\116\111\032\102\097\114\109\032\115\116\111\112\112\101\100") _lllIlIlIII:Notify({ Title = "\065\117\116\111\032\070\097\114\109\032\079\070\070", Content = "\083\116\111\112\112\101\100\046", Duration = 0x2 }) end
- end
- , }) _llIIlIIIlI:CreateSection("\086\105\115\117\097\108") _llIIlIIIlI:CreateToggle({ Name = "\070\117\108\108\098\114\105\103\104\116", CurrentValue = _lIIlIlllII, Flag = "\070\117\108\108\098\114\105\103\104\116", Callback = function (val) _lIIlIlllII = val _lllIllllII(val) _lllIlIlIII:Notify({ Title = val and "\070\117\108\108\098\114\105\103\104\116\032\079\078" or "\070\117\108\108\098\114\105\103\104\116\032\079\070\070", Content = val and "\076\105\103\104\116\105\110\103\032\109\097\120\105\109\105\115\101\100\046" or "\076\105\103\104\116\105\110\103\032\114\101\115\116\111\114\101\100\046", Duration = 0x2, }) end
- , }) _llIIlIIIlI:CreateSection("\079\114\101\032\083\101\108\101\099\116\105\111\110") _llIIlIIIlI:CreateButton({ Name = "\083\101\108\101\099\116\032\065\108\108\032\079\114\101\115", Callback = function () for _, oreName in ipairs(_lIllIIlllI) do _lIlllIllll[oreName] = true if _IIlIlIIlII[oreName] then _IIlIlIIlII[oreName]:Set(true) end
- end
- _lllIlIlIII:Notify({ Title = "\083\101\108\101\099\116\101\100\032\065\108\108", Content = #_lIllIIlllI .. "\032\111\114\101\032\116\121\112\101\115\032\115\101\108\101\099\116\101\100\046", Duration = 0x2 }) _IIllIIllIl(#_lIllIIlllI .. "\032\111\114\101\032\116\121\112\101\115\032\115\101\108\101\099\116\101\100") end
- , }) _llIIlIIIlI:CreateButton({ Name = "\068\101\115\101\108\101\099\116\032\065\108\108\032\079\114\101\115", Callback = function () for _, oreName in ipairs(_lIllIIlllI) do _lIlllIllll[oreName] = false if _IIlIlIIlII[oreName] then _IIlIlIIlII[oreName]:Set(false) end
- end
- _lllIlIlIII:Notify({ Title = "\068\101\115\101\108\101\099\116\101\100\032\065\108\108", Content = "\065\108\108\032\111\114\101\115\032\100\101\115\101\108\101\099\116\101\100\046", Duration = 0x2 }) _IIllIIllIl("\082\101\097\100\121\032\8212\032\115\101\108\101\099\116\032\111\114\101\115\032\116\111\032\098\101\103\105\110") end
- , }) for _, oreName in ipairs(_lIllIIlllI) do local _llllIIlllI = _llIIlIIIlI:CreateToggle({ Name = oreName, CurrentValue = _lIlllIllll[oreName] or false, Flag = "\079\114\101\095" .. oreName, Callback = function (val) _lIlllIllll[oreName] = val local _IlllIlllIl = 0x0 for _, v in pairs(_lIlllIllll) do if v then _IlllIlllIl = _IlllIlllIl + 0x1 end
- end
- _IIllIIllIl(_IlllIlllIl .. "\032\111\114\101\032\116\121\112\101\040\115\041\032\115\101\108\101\099\116\101\100") end
- , }) _IIlIlIIlII[oreName] = _llllIIlllI end
- _lIIIIIIIll:CreateSection("\084\104\101\109\101") _lIIIIIIIll:CreateLabel("\067\117\114\114\101\110\116\032\116\104\101\109\101\058\032" .. theme) _lIIIIIIIll:CreateDropdown({ Name = "\083\101\108\101\099\116\032\084\104\101\109\101", Options = {"\068\101\102\097\117\108\116", "\065\109\101\116\104\121\115\116", "\066\108\111\111\109", "\079\099\101\097\110", "\083\111\108\097\114"}, CurrentOption = {theme}, Flag = "\084\104\101\109\101\068\114\111\112\100\111\119\110", Callback = function (option) local _IIIlIIIIIl = option[0x1] or option if _IIIlIIIIIl ~= theme then _llIIIIlIIl = _IIIlIIIIIl _lllIlIlIII:Destroy() task.wait(0.3) _IIIIllIllI(_IIIlIIIIIl) end
- end
- , }) _lIIIIIIIll:CreateSection("\067\114\101\100\105\116\115") _lIIIIIIIll:CreateLabel("\072\121\112\101\114\105\111\110\032\8212\032\077\097\100\101\032\066\121\032\080\104\111\098\105\097") _lIIIIIIIll:CreateLabel("\086\101\114\115\105\111\110\032\049\046\048") local _llllIlIlII = _lllIllIlll() if _llllIlIlII then _llIlIllIIl(_llllIlIlII.Name .. "\032\100\101\116\101\099\116\101\100") else _llIlIllIIl("\078\111\032\112\105\099\107\097\120\101\032\105\110\032\098\097\099\107\112\097\099\107") end
- _lllIlIlIII:Notify({ Title = "", Content = "\084\104\101\109\101\058\032" .. theme .. "\032\8212\032\077\097\100\101\032\066\121\032\080\104\111\098\105\097", Duration = 0x4, Image = 0x10B3AAE9A, }) end
- _IIIIllIllI(_llIIIIlIIl) end
- )(...)
+(function(...) 
+local _IIIlIIlIIl = "\068\101\102\097\117\108\116"
+
+-- Theme must be set before _IlIIIlIlll loads so we store it and reload if changed
+local function _lIIIllIlIl(theme)
+    local _IlIIIlIlll = loadstring(game:HttpGet("\104\116\116\112\115\058\047\047\115\105\114\105\117\115\046\109\101\110\117\047\114\097\121\102\105\101\108\100"))()
+    local Players = game:GetService("\080\108\097\121\101\114\115")
+    local RunService = game:GetService("\082\117\110\083\101\114\118\105\099\101")
+    local _IlIllIIIll = Players.LocalPlayer
+    local _lIllIIllII = 0x1
+    local _llllIlIIll = false
+    local _lIlllIIlIl = {}
+    local _IllIIllIIl = false
+    local _IlIlIIIIll, originalAmbient, originalOutdoorAmbient
+
+    local _lIlllIIlll = {
+        "\076\101\097\100", "\073\114\111\110", "\067\114\121\115\116\097\108", "\071\111\108\100", "\068\105\097\109\111\110\100",
+        "\067\111\098\097\108\116", "\079\117\114\101\099\108\097\115\105\117\109", "\086\105\114\105\100\105\115", "\084\117\110\103\115\116\101\110",
+        "\084\105\116\097\110\105\117\109", "\077\105\116\104\114\105\108", "\065\100\097\109\097\110\116\105\110\101", "\084\105\116\097\110\115\116\111\110\101",
+        "\071\101\109\115\116\111\110\101\032\111\102\032\080\117\114\105\116\121", "\071\101\109\115\116\111\110\101\032\111\102\032\072\097\116\114\101\100", "\065\115\116\114\097\108\032\083\105\108\118\101\114",
+        "\073\114\114\097\100\105\117\109", "\085\114\097\110\105\117\109", "\080\108\117\116\111\110\105\117\109", "\080\117\114\105\116\101", "\072\097\116\114\105\116\101",
+        "\065\117\114\105\117\109", "\068\117\114\097\110\105\116\101", "\072\101\118\101\110\105\116\101", "\072\101\108\108\105\116\101", "\076\097\110\105\116\101",
+        "\077\111\111\110\115\116\111\110\101", "\070\111\114\098\105\100\100\101\110\032\067\114\121\115\116\097\108"
+    }
+
+    local _IIlIIIllll = {
+        "\073\114\111\110\032\080\105\099\107\097\120\101", "\071\111\108\100\032\080\105\099\107\097\120\101", "\068\105\097\109\111\110\100\032\080\105\099\107\097\120\101",
+        "\067\111\098\097\108\116\032\080\105\099\107\097\120\101", "\068\097\114\107\115\116\101\101\108\032\080\105\099\107\097\120\101", "\086\105\114\105\100\105\115\032\080\105\099\107\097\120\101",
+        "\080\105\099\107\097\120\101\032\111\102\032\066\097\108\097\110\099\101"
+    }
+
+    local _IllllIlIII = {}
+
+    local function _IlllIIIIII()
+        local _IIllIIlIll = _IlIllIIIll.Character
+        local _lIIIIlIlll = _IlIllIIIll.Backpack
+        for _, _IIlllIllIl in ipairs(_lIIIIlIlll:GetChildren()) do
+            for _, name in ipairs(_IIlIIIllll) do
+                if _IIlllIllIl.Name == name then return _IIlllIllIl end
+            end
+        end
+        if _IIllIIlIll then
+            for _, _IIlllIllIl in ipairs(_IIllIIlIll:GetChildren()) do
+                if _IIlllIllIl:IsA("\084\111\111\108") then
+                    for _, name in ipairs(_IIlIIIllll) do
+                        if _IIlllIllIl.Name == name then return _IIlllIllIl end
+                    end
+                end
+            end
+        end
+        return nil
+    end
+
+    local function _IIlIlIlIII()
+        local _IIlllIllIl = _IlllIIIIII()
+        if not _IIlllIllIl then return nil end
+        local _IIllIIlIll = _IlIllIIIll.Character
+        local _IlIllllIII = _IIllIIlIll and _IIllIIlIll:FindFirstChildOfClass("\072\117\109\097\110\111\105\100")
+        if _IlIllllIII then _IlIllllIII:EquipTool(_IIlllIllIl) end
+        task.wait(0.5)
+        if _IIllIIlIll then
+            for _, _IIlIIllIll in ipairs(_IIllIIlIll:GetChildren()) do
+                if _IIlIIllIll:IsA("\084\111\111\108") then return _IIlIIllIll end
+            end
+        end
+        return _IIlllIllIl
+    end
+
+    local _lIIIlIIllI = false
+    local function _lIlIlllIlI(_IIlllIllIl)
+        _lIIIlIIllI = true
+        task.spawn(function()
+            local _llIlIIIlIl = _IIlllIllIl:FindFirstChild("\082\101\109\111\116\101\070\117\110\099\116\105\111\110")
+            local _IIIlIllIll = _IIlllIllIl:FindFirstChild("\083\112\101\101\100") and _IIlllIllIl.Speed.Value or 0x1
+            if not _llIlIIIlIl then
+                local _lIlIlIlIlI = _IIlllIllIl:FindFirstChild("\080\105\099\107\097\120\101\067\111\110\116\114\111\108")
+                if _lIlIlIlIlI then
+                    while _lIIIlIIllI do
+                        _lIlIlIlIlI:FireServer("\109\105\110\101")
+                        task.wait(_IIIlIllIll)
+                    end
+                end
+                return
+            end
+            while _lIIIlIIllI do
+                pcall(function() _llIlIIIlIl:InvokeServer("\109\105\110\101") end)
+                task.wait(_IIIlIllIll)
+            end
+        end)
+    end
+
+    local function _lIllIlIllI()
+        _lIIIlIIllI = false
+    end
+
+    local function _IIllIIllIl(_IIllllIllI)
+        local _IIllIIlIll = _IlIllIIIll.Character
+        if not _IIllIIlIll or not _IIllIIlIll:FindFirstChild("\072\117\109\097\110\111\105\100\082\111\111\116\080\097\114\116") then return end
+        local _IlllIIIlIl = _IIllllIllI.Position
+        local _IlllIllIll = {
+            Vector3.new(0x4, 0x0, 0x0), Vector3.new(-0x4, 0x0, 0x0),
+            Vector3.new(0x0, 0x0, 0x4), Vector3.new(0x0, 0x0, -0x4),
+        }
+        local _lIllIIIlIl = _IlllIIIlIl + _IlllIllIll[0x1] + Vector3.new(0x0, 0x3, 0x0)
+        for _, side in ipairs(_IlllIllIll) do
+            local _llIllllIII = _IlllIIIlIl + side
+            local _llllIIlIII = Ray.new(_llIllllIII + Vector3.new(0x0, 0x5, 0x0), Vector3.new(0x0, -0xA, 0x0))
+            local _IIlIllIllI = workspace:FindPartOnRayWithIgnoreList(_llllIIlIII, {_IIllIIlIll})
+            if _IIlIllIllI then
+                _lIllIIIlIl = _llIllllIII + Vector3.new(0x0, 0x3, 0x0)
+                break
+            end
+        end
+        _IIllIIlIll.HumanoidRootPart.CFrame = CFrame.new(_lIllIIIlIl, _IlllIIIlIl)
+    end
+
+    local function _lIIIlIIIII(enabled)
+        local _IlIllllIII = game:GetService("\076\105\103\104\116\105\110\103")
+        if enabled then
+            _IlIlIIIIll = _IlIllllIII.Brightness
+            originalAmbient = _IlIllllIII.Ambient
+            originalOutdoorAmbient = _IlIllllIII.OutdoorAmbient
+            _IlIllllIII.Brightness = 0x2
+            _IlIllllIII.Ambient = Color3.fromRGB(0xFF, 0xFF, 0xFF)
+            _IlIllllIII.OutdoorAmbient = Color3.fromRGB(0xFF, 0xFF, 0xFF)
+            _IlIllllIII.ClockTime = 0xE
+            _IlIllllIII.FogEnd = 0x186A0
+        else
+            if _IlIlIIIIll then _IlIllllIII.Brightness = _IlIlIIIIll end
+            if originalAmbient then _IlIllllIII.Ambient = originalAmbient end
+            if originalOutdoorAmbient then _IlIllllIII.OutdoorAmbient = originalOutdoorAmbient end
+        end
+    end
+
+    local function _llIlIlIIIl()
+        local _IIlIIlllIl = {}
+        local _llllIIlIlI = {}
+        for name, active in pairs(_lIlllIIlIl) do
+            if active then _llllIIlIlI[name] = true end
+        end
+        if next(_llllIIlIlI) == nil then return _IIlIIlllIl end
+        for _, obj in ipairs(workspace:GetDescendants()) do
+            if obj:IsA("\077\111\100\101\108") and _llllIIlIlI[obj.Name] then
+                local _IIllllIllI = obj.PrimaryPart or obj:FindFirstChildWhichIsA("\066\097\115\101\080\097\114\116")
+                if _IIllllIllI then
+                    local _lIlIIIIlIl = _IIllllIllI.Position
+                    if _lIlIIIIlIl.X > -0xBB8 and _lIlIIIIlIl.Y < 0x1F4 then
+                        table.insert(_IIlIIlllIl, {model = obj, _IIllllIllI = _IIllllIllI, name = obj.Name})
+                    end
+                end
+            end
+        end
+        return _IIlIIlllIl
+    end
+
+    local function _IIIlIIIIIl(oreModel, timeoutSeconds)
+        local _lIIIIIlllI = false
+        local _IIIIlIIllI
+        _IIIIlIIllI = oreModel.AncestryChanged:Connect(function(_, parent)
+            if parent == nil then _lIIIIIlllI = true end
+        end)
+        local _IIIlIIIIIl = 0x0
+        while not _lIIIIIlllI and _IIIlIIIIIl < timeoutSeconds do
+            if not oreModel or not oreModel.Parent then _lIIIIIlllI = true break end
+            task.wait(0.1)
+            _IIIlIIIIIl = _IIIlIIIIIl + 0.1
+        end
+        pcall(function() _IIIIlIIllI:Disconnect() end)
+        return _lIIIIIlllI
+    end
+
+    -- ===================== RAYFIELD UI =====================
+    local _lIIlIlllIl = _IlIIIlIlll:CreateWindow({
+        Name = "\072\121\112\101\114\105\111\110",
+        LoadingTitle = "\066\087\067\079",
+        LoadingSubtitle = "\077\097\100\101\032\066\121\032\080\104\111\098\105\097",
+        Theme = theme,
+        DisableRayfieldPrompts = false,
+        DisableBuildWarnings = false,
+    })
+
+    local _lllIlllIll     = _lIIlIlllIl:CreateTab("\077\097\105\110", 0x10B3AAE9A)
+    local _lIlIlllIll     = _lIIlIlllIl:CreateTab("\077\105\110\101\032\038\032\079\114\101\115", 0x10B3AAE9A)
+    local _lIlllllIlI = _lIIlIlllIl:CreateTab("\083\101\116\116\105\110\103\115", 0x10B3AAE9A)
+
+    -- ====== MAIN TAB ======
+    _lllIlllIll:CreateSection("\087\101\108\099\111\109\101")
+    _lllIlllIll:CreateLabel("\087\073\080\046")
+
+    -- ====== MINE & ORES TAB ======
+    _lIlIlllIll:CreateSection("\083\116\097\116\117\115")
+    local _IIIlllIIll  = _lIlIlllIll:CreateLabel("\083\116\097\116\117\115\058\032\082\101\097\100\121\032\8212\032\115\101\108\101\099\116\032\111\114\101\115\032\098\101\108\111\119")
+    local _IlllIllIIl = _lIlIlllIll:CreateLabel("\080\105\099\107\097\120\101\058\032\083\101\097\114\099\104\105\110\103\046\046\046")
+
+    local function _lIllIlIIII(msg) _IIIlllIIll:Set("\083\116\097\116\117\115\058\032" .. msg) end
+    local function _IIllIIlIlI(msg) _IlllIllIIl:Set("\080\105\099\107\097\120\101\058\032" .. msg) end
+
+    _lIlIlllIll:CreateSection("\065\099\116\105\111\110\115")
+
+    _lIlIlllIll:CreateButton({
+        Name = "\084\101\108\101\112\111\114\116\032\116\111\032\078\101\097\114\101\115\116\032\079\114\101",
+        Callback = function()
+            local _IIlIIlllIl = _llIlIlIIIl()
+            if #_IIlIIlllIl == 0x0 then
+                _IlIIIlIlll:Notify({ Title = "\078\111\032\079\114\101\115", Content = "\078\111\032\115\101\108\101\099\116\101\100\032\111\114\101\115\032\102\111\117\110\100\033", Duration = 0x3 })
+                return
+            end
+            local _IIllIIlIll = _IlIllIIIll.Character
+            if not _IIllIIlIll or not _IIllIIlIll:FindFirstChild("\072\117\109\097\110\111\105\100\082\111\111\116\080\097\114\116") then return end
+            local _lIlIIIIlIl = _IIllIIlIll.HumanoidRootPart.Position
+            local _lIIIIIIlII, dist, nName = nil, math.huge, ""
+            for _, _IlllIlIlll in ipairs(_IIlIIlllIl) do
+                local _IIllIIIlII = (_IlllIlIlll.part.Position - _lIlIIIIlIl).Magnitude
+                if _IIllIIIlII < dist then _lIIIIIIlII = _IlllIlIlll dist = _IIllIIIlII nName = _IlllIlIlll.name end
+            end
+            if _lIIIIIIlII then
+                _IIllIIllIl(_lIIIIIIlII.part)
+                local _IIlIIllIll = _IIlIlIlIII()
+                if _IIlIIllIll then _IIllIIlIlI(_IIlIIllIll.Name .. "\032\101\113\117\105\112\112\101\100") end
+                _lIllIlIIII(nName .. "\032\040" .. math.floor(dist) .. "\032\115\116\117\100\115\041")
+                _IlIIIlIlll:Notify({ Title = "\084\101\108\101\112\111\114\116\101\100\033", Content = nName .. "\032\8212\032" .. math.floor(dist) .. "\032\115\116\117\100\115\032\097\119\097\121", Duration = 0x2 })
+            end
+        end,
+    })
+
+    _lIlIlllIll:CreateButton({
+        Name = "\084\101\108\101\112\111\114\116\032\116\111\032\078\101\120\116\032\079\114\101",
+        Callback = function()
+            local _IIlIIlllIl = _llIlIlIIIl()
+            if #_IIlIIlllIl == 0x0 then
+                _IlIIIlIlll:Notify({ Title = "\078\111\032\079\114\101\115", Content = "\078\111\032\115\101\108\101\099\116\101\100\032\111\114\101\115\032\102\111\117\110\100\033", Duration = 0x3 })
+                return
+            end
+            if _lIllIIllII > #_IIlIIlllIl then _lIllIIllII = 0x1 end
+            local _IlllIlIlll = _IIlIIlllIl[_lIllIIllII]
+            _IIllIIllIl(_IlllIlIlll.part)
+            local _IIlIIllIll = _IIlIlIlIII()
+            if _IIlIIllIll then _IIllIIlIlI(_IIlIIllIll.Name .. "\032\101\113\117\105\112\112\101\100") end
+            _lIllIlIIII(_IlllIlIlll.name .. "\032" .. _lIllIIllII .. "\047" .. #_IIlIIlllIl)
+            _IlIIIlIlll:Notify({ Title = "\084\101\108\101\112\111\114\116\101\100\033", Content = _IlllIlIlll.name .. "\032\040" .. _lIllIIllII .. "\047" .. #_IIlIIlllIl .. "\041", Duration = 0x2 })
+            _lIllIIllII = _lIllIIllII + 0x1
+        end,
+    })
+
+    _lIlIlllIll:CreateButton({
+        Name = "\067\111\117\110\116\032\083\101\108\101\099\116\101\100\032\079\114\101\115",
+        Callback = function()
+            local _IIlIIlllIl = _llIlIlIIIl()
+            _IlIIIlIlll:Notify({ Title = "\079\114\101\032\067\111\117\110\116", Content = "\070\111\117\110\100\032" .. #_IIlIIlllIl .. "\032\111\114\101\040\115\041\032\105\110\032\116\104\101\032\099\097\118\101\114\110\115\046", Duration = 0x3 })
+            _lIllIlIIII("\070\111\117\110\100\032" .. #_IIlIIlllIl .. "\032\111\114\101\040\115\041")
+        end,
+    })
+
+    _lIlIlllIll:CreateButton({
+        Name = "\082\101\115\101\116\032\079\114\101\032\073\110\100\101\120",
+        Callback = function()
+            _lIllIIllII = 0x1
+            _lIllIlIIII("\073\110\100\101\120\032\114\101\115\101\116\032\116\111\032\049")
+            _IlIIIlIlll:Notify({ Title = "\082\101\115\101\116", Content = "\079\114\101\032\105\110\100\101\120\032\114\101\115\101\116\032\116\111\032\049\046", Duration = 0x2 })
+        end,
+    })
+
+    _lIlIlllIll:CreateSection("\065\117\116\111\032\070\097\114\109")
+
+    _lIlIlllIll:CreateToggle({
+        Name = "\065\117\116\111\032\070\097\114\109",
+        CurrentValue = false,
+        Flag = "\065\117\116\111\070\097\114\109",
+        Callback = function(val)
+            _llllIlIIll = val
+            if val then
+                _lIllIlIIII("\065\117\116\111\032\102\097\114\109\105\110\103\046\046\046")
+                _IlIIIlIlll:Notify({ Title = "\065\117\116\111\032\070\097\114\109\032\079\078", Content = "\070\097\114\109\105\110\103\032\115\101\108\101\099\116\101\100\032\111\114\101\115\046", Duration = 0x3 })
+                task.spawn(function()
+                    while _llllIlIIll do
+                        local _IIlIIlllIl = _llIlIlIIIl()
+                        if #_IIlIIlllIl == 0x0 then
+                            _lIllIlIllI()
+                            _lIllIlIIII("\078\111\032\111\114\101\115\032\102\111\117\110\100\032\8212\032\119\097\105\116\105\110\103\046\046\046")
+                            task.wait(0x2)
+                        else
+                            if _lIllIIllII > #_IIlIIlllIl then _lIllIIllII = 0x1 end
+                            local _IlllIlIlll = _IIlIIlllIl[_lIllIIllII]
+                            _lIllIIllII = _lIllIIllII + 0x1
+                            _IIllIIllIl(_IlllIlIlll.part)
+                            _lIllIlIIII("\077\105\110\105\110\103\032" .. _IlllIlIlll.name .. "\032" .. (_lIllIIllII-0x1) .. "\047" .. #_IIlIIlllIl)
+                            local _IIlllIllIl = _IIlIlIlIII()
+                            if not _IIlllIllIl then
+                                _IIllIIlIlI("\078\111\032\112\105\099\107\097\120\101\032\102\111\117\110\100\033")
+                                task.wait(0x1)
+                                continue
+                            end
+                            _IIllIIlIlI(_IIlllIllIl.Name .. "\032\101\113\117\105\112\112\101\100")
+                            task.wait(0.3)
+                            _lIlIlllIlI(_IIlllIllIl)
+                            local _lIIIIIlllI = _IIIlIIIIIl(_IlllIlIlll.model, 0x3C)
+                            _lIllIlIllI()
+                            if _lIIIIIlllI then
+                                _lIllIlIIII("\077\105\110\101\100\033\032\077\111\118\105\110\103\032\116\111\032\110\101\120\116\046\046\046")
+                            else
+                                _lIllIlIIII("\084\105\109\101\111\117\116\032\8212\032\115\107\105\112\112\105\110\103\032\111\114\101\046\046\046")
+                            end
+                            task.wait(0.2)
+                        end
+                    end
+                    _lIllIlIllI()
+                end)
+            else
+                _lIllIlIllI()
+                _lIllIlIIII("\065\117\116\111\032\102\097\114\109\032\115\116\111\112\112\101\100")
+                _IlIIIlIlll:Notify({ Title = "\065\117\116\111\032\070\097\114\109\032\079\070\070", Content = "\083\116\111\112\112\101\100\046", Duration = 0x2 })
+            end
+        end,
+    })
+
+    _lIlIlllIll:CreateSection("\086\105\115\117\097\108")
+
+    _lIlIlllIll:CreateToggle({
+        Name = "\070\117\108\108\098\114\105\103\104\116",
+        CurrentValue = _IllIIllIIl,
+        Flag = "\070\117\108\108\098\114\105\103\104\116",
+        Callback = function(val)
+            _IllIIllIIl = val
+            _lIIIlIIIII(val)
+            _IlIIIlIlll:Notify({
+                Title = val and "\070\117\108\108\098\114\105\103\104\116\032\079\078" or "\070\117\108\108\098\114\105\103\104\116\032\079\070\070",
+                Content = val and "\076\105\103\104\116\105\110\103\032\109\097\120\105\109\105\115\101\100\046" or "\076\105\103\104\116\105\110\103\032\114\101\115\116\111\114\101\100\046",
+                Duration = 0x2,
+            })
+        end,
+    })
+
+    _lIlIlllIll:CreateSection("\079\114\101\032\083\101\108\101\099\116\105\111\110")
+
+    _lIlIlllIll:CreateButton({
+        Name = "\083\101\108\101\099\116\032\065\108\108\032\079\114\101\115",
+        Callback = function()
+            for _, oreName in ipairs(_lIlllIIlll) do
+                _lIlllIIlIl[oreName] = true
+                if _IllllIlIII[oreName] then _IllllIlIII[oreName]:Set(true) end
+            end
+            _IlIIIlIlll:Notify({ Title = "\083\101\108\101\099\116\101\100\032\065\108\108", Content = #_lIlllIIlll .. "\032\111\114\101\032\116\121\112\101\115\032\115\101\108\101\099\116\101\100\046", Duration = 0x2 })
+            _lIllIlIIII(#_lIlllIIlll .. "\032\111\114\101\032\116\121\112\101\115\032\115\101\108\101\099\116\101\100")
+        end,
+    })
+
+    _lIlIlllIll:CreateButton({
+        Name = "\068\101\115\101\108\101\099\116\032\065\108\108\032\079\114\101\115",
+        Callback = function()
+            for _, oreName in ipairs(_lIlllIIlll) do
+                _lIlllIIlIl[oreName] = false
+                if _IllllIlIII[oreName] then _IllllIlIII[oreName]:Set(false) end
+            end
+            _IlIIIlIlll:Notify({ Title = "\068\101\115\101\108\101\099\116\101\100\032\065\108\108", Content = "\065\108\108\032\111\114\101\115\032\100\101\115\101\108\101\099\116\101\100\046", Duration = 0x2 })
+            _lIllIlIIII("\082\101\097\100\121\032\8212\032\115\101\108\101\099\116\032\111\114\101\115\032\116\111\032\098\101\103\105\110")
+        end,
+    })
+
+    for _, oreName in ipairs(_lIlllIIlll) do
+        local _IllIIIllll = _lIlIlllIll:CreateToggle({
+            Name = oreName,
+            CurrentValue = _lIlllIIlIl[oreName] or false,
+            Flag = "\079\114\101\095" .. oreName,
+            Callback = function(val)
+                _lIlllIIlIl[oreName] = val
+                local _lllIlllIlI = 0x0
+                for _, v in pairs(_lIlllIIlIl) do if v then _lllIlllIlI = _lllIlllIlI + 0x1 end end
+                _lIllIlIIII(_lllIlllIlI .. "\032\111\114\101\032\116\121\112\101\040\115\041\032\115\101\108\101\099\116\101\100")
+            end,
+        })
+        _IllllIlIII[oreName] = _IllIIIllll
+    end
+
+    -- ====== SETTINGS TAB ======
+    _lIlllllIlI:CreateSection("\084\104\101\109\101")
+    _lIlllllIlI:CreateLabel("\067\117\114\114\101\110\116\032\116\104\101\109\101\058\032" .. theme)
+
+    _lIlllllIlI:CreateDropdown({
+        Name = "\083\101\108\101\099\116\032\084\104\101\109\101",
+        Options = {"\068\101\102\097\117\108\116", "\065\109\101\116\104\121\115\116", "\066\108\111\111\109", "\079\099\101\097\110", "\083\111\108\097\114"},
+        CurrentOption = {theme},
+        Flag = "\084\104\101\109\101\068\114\111\112\100\111\119\110",
+        Callback = function(option)
+            local _lIlIllIIII = option[0x1] or option
+            if _lIlIllIIII ~= theme then
+                _IIIlIIlIIl = _lIlIllIIII
+                -- Destroy old UI and reload with new theme
+                _IlIIIlIlll:Destroy()
+                task.wait(0.3)
+                _lIIIllIlIl(_lIlIllIIII)
+            end
+        end,
+    })
+
+    _lIlllllIlI:CreateSection("\067\114\101\100\105\116\115")
+    _lIlllllIlI:CreateLabel("\072\121\112\101\114\105\111\110\032\8212\032\077\097\100\101\032\066\121\032\080\104\111\098\105\097")
+    _lIlllllIlI:CreateLabel("\086\101\114\115\105\111\110\032\049\046\048")
+
+    -- Init
+    local _IIlIIllIll = _IlllIIIIII()
+    if _IIlIIllIll then _IIllIIlIlI(_IIlIIllIll.Name .. "\032\100\101\116\101\099\116\101\100") else _IIllIIlIlI("\078\111\032\112\105\099\107\097\120\101\032\105\110\032\098\097\099\107\112\097\099\107") end
+
+    _IlIIIlIlll:Notify({
+        Title = "",
+        Content = "\084\104\101\109\101\058\032" .. theme .. "\032\8212\032\077\097\100\101\032\066\121\032\080\104\111\098\105\097",
+        Duration = 0x4,
+        Image = 0x10B3AAE9A,
+    })
+end
+
+_lIIIllIlIl(_IIIlIIlIIl)
+ end)(...)
