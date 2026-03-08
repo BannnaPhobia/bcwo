@@ -1,21 +1,18 @@
---[[ Protected by Lua Guard ]]
+local ThemeChoice = "Default"
 
-(function(...) 
-local _lIllIIIlIl = "Default"
-
--- Theme must be set before _lllIIlIIll loads so we store it and reload if changed
-local function _lIIlIIIlII(theme)
-    local _lllIIlIIll = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+-- Theme must be set before Rayfield loads so we store it and reload if changed
+local function loadScript(theme)
+    local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
     local Players = game:GetService("Players")
     local RunService = game:GetService("RunService")
-    local _IIlllllIll = Players.LocalPlayer
-    local _IlllllIlIl = 0x1
-    local _lIIllIIIIl = false
-    local _lIllIIlIlI = {}
-    local _lIllIllIIl = false
-    local _IIlIlIIlII, originalAmbient, originalOutdoorAmbient
+    local LocalPlayer = Players.LocalPlayer
+    local currentIndex = 1
+    local autoFarming = false
+    local selectedOres = {}
+    local fullbrightEnabled = false
+    local originalBrightness, originalAmbient, originalOutdoorAmbient
 
-    local _lIIIIIlIll = {
+    local oreList = {
         "Lead", "Iron", "Crystal", "Gold", "Diamond",
         "Cobalt", "Oureclasium", "Viridis", "Tungsten",
         "Titanium", "Mithril", "Adamantine", "Titanstone",
@@ -25,27 +22,27 @@ local function _lIIlIIIlII(theme)
         "Moonstone", "Forbidden Crystal"
     }
 
-    local _IllIlIllll = {
+    local pickaxeNames = {
         "Iron Pickaxe", "Gold Pickaxe", "Diamond Pickaxe",
         "Cobalt Pickaxe", "Darksteel Pickaxe", "Viridis Pickaxe",
         "Pickaxe of Balance"
     }
 
-    local _IIIlIlIIlI = {}
+    local oreToggles = {}
 
-    local function _lIIlIlIlII()
-        local _IIIlIIllll = _IIlllllIll.Character
-        local _IllIIllIll = _IIlllllIll.Backpack
-        for _, _IlIlIlIIlI in ipairs(_IllIIllIll:GetChildren()) do
-            for _, name in ipairs(_IllIlIllll) do
-                if _IlIlIlIIlI.Name == name then return _IlIlIlIIlI end
+    local function findPickaxe()
+        local char = LocalPlayer.Character
+        local backpack = LocalPlayer.Backpack
+        for _, tool in ipairs(backpack:GetChildren()) do
+            for _, name in ipairs(pickaxeNames) do
+                if tool.Name == name then return tool end
             end
         end
-        if _IIIlIIllll then
-            for _, _IlIlIlIIlI in ipairs(_IIIlIIllll:GetChildren()) do
-                if _IlIlIlIIlI:IsA("Tool") then
-                    for _, name in ipairs(_IllIlIllll) do
-                        if _IlIlIlIIlI.Name == name then return _IlIlIlIIlI end
+        if char then
+            for _, tool in ipairs(char:GetChildren()) do
+                if tool:IsA("Tool") then
+                    for _, name in ipairs(pickaxeNames) do
+                        if tool.Name == name then return tool end
                     end
                 end
             end
@@ -53,362 +50,362 @@ local function _lIIlIIIlII(theme)
         return nil
     end
 
-    local function _lIIlllIIlI()
-        local _IlIlIlIIlI = _lIIlIlIlII()
-        if not _IlIlIlIIlI then return nil end
-        local _IIIlIIllll = _IIlllllIll.Character
-        local _IlIllIIlIl = _IIIlIIllll and _IIIlIIllll:FindFirstChildOfClass("Humanoid")
-        if _IlIllIIlIl then _IlIllIIlIl:EquipTool(_IlIlIlIIlI) end
+    local function equipPickaxe()
+        local tool = findPickaxe()
+        if not tool then return nil end
+        local char = LocalPlayer.Character
+        local hum = char and char:FindFirstChildOfClass("Humanoid")
+        if hum then hum:EquipTool(tool) end
         task.wait(0.5)
-        if _IIIlIIllll then
-            for _, _IIlIllllII in ipairs(_IIIlIIllll:GetChildren()) do
-                if _IIlIllllII:IsA("Tool") then return _IIlIllllII end
+        if char then
+            for _, t in ipairs(char:GetChildren()) do
+                if t:IsA("Tool") then return t end
             end
         end
-        return _IlIlIlIIlI
+        return tool
     end
 
-    local _IIIIllIllI = false
-    local function _lIlllIIlll(_IlIlIlIIlI)
-        _IIIIllIllI = true
+    local miningActive = false
+    local function startMining(tool)
+        miningActive = true
         task.spawn(function()
-            local _lIIIlIllIl = _IlIlIlIIlI:FindFirstChild("RemoteFunction")
-            local _lIIIIllllI = _IlIlIlIIlI:FindFirstChild("Speed") and _IlIlIlIIlI.Speed.Value or 0x1
-            if not _lIIIlIllIl then
-                local _IIlIIllIIl = _IlIlIlIIlI:FindFirstChild("PickaxeControl")
-                if _IIlIIllIIl then
-                    while _IIIIllIllI do
-                        _IIlIIllIIl:FireServer("mine")
-                        task.wait(_lIIIIllllI)
+            local rf = tool:FindFirstChild("RemoteFunction")
+            local speed = tool:FindFirstChild("Speed") and tool.Speed.Value or 1
+            if not rf then
+                local re = tool:FindFirstChild("PickaxeControl")
+                if re then
+                    while miningActive do
+                        re:FireServer("mine")
+                        task.wait(speed)
                     end
                 end
                 return
             end
-            while _IIIIllIllI do
-                pcall(function() _lIIIlIllIl:InvokeServer("mine") end)
-                task.wait(_lIIIIllllI)
+            while miningActive do
+                pcall(function() rf:InvokeServer("mine") end)
+                task.wait(speed)
             end
         end)
     end
 
-    local function _IIIIIIIIlI()
-        _IIIIllIllI = false
+    local function stopMining()
+        miningActive = false
     end
 
-    local function _IIlIllllll(_lIIllIllII)
-        local _IIIlIIllll = _IIlllllIll.Character
-        if not _IIIlIIllll or not _IIIlIIllll:FindFirstChild("HumanoidRootPart") then return end
-        local _llIIIIllII = _lIIllIllII.Position
-        local _IIIIIlllll = {
-            Vector3.new(0x4, 0x0, 0x0), Vector3.new(-0x4, 0x0, 0x0),
-            Vector3.new(0x0, 0x0, 0x4), Vector3.new(0x0, 0x0, -0x4),
+    local function teleportToSide(part)
+        local char = LocalPlayer.Character
+        if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+        local orePos = part.Position
+        local sides = {
+            Vector3.new(4, 0, 0), Vector3.new(-4, 0, 0),
+            Vector3.new(0, 0, 4), Vector3.new(0, 0, -4),
         }
-        local _lllllllIII = _llIIIIllII + _IIIIIlllll[0x1] + Vector3.new(0x0, 0x3, 0x0)
-        for _, side in ipairs(_IIIIIlllll) do
-            local _lIlIIIllIl = _llIIIIllII + side
-            local _IlIlIIlIII = Ray.new(_lIlIIIllIl + Vector3.new(0x0, 0x5, 0x0), Vector3.new(0x0, -0xA, 0x0))
-            local _IIIllllIIl = workspace:FindPartOnRayWithIgnoreList(_IlIlIIlIII, {_IIIlIIllll})
-            if _IIIllllIIl then
-                _lllllllIII = _lIlIIIllIl + Vector3.new(0x0, 0x3, 0x0)
+        local bestPos = orePos + sides[1] + Vector3.new(0, 3, 0)
+        for _, side in ipairs(sides) do
+            local candidate = orePos + side
+            local ray = Ray.new(candidate + Vector3.new(0, 5, 0), Vector3.new(0, -10, 0))
+            local hit = workspace:FindPartOnRayWithIgnoreList(ray, {char})
+            if hit then
+                bestPos = candidate + Vector3.new(0, 3, 0)
                 break
             end
         end
-        _IIIlIIllll.HumanoidRootPart.CFrame = CFrame.new(_lllllllIII, _llIIIIllII)
+        char.HumanoidRootPart.CFrame = CFrame.new(bestPos, orePos)
     end
 
-    local function _lIIIIllIIl(enabled)
-        local _IlIllIIIII = game:GetService("Lighting")
+    local function setFullbright(enabled)
+        local lighting = game:GetService("Lighting")
         if enabled then
-            _IIlIlIIlII = _IlIllIIIII.Brightness
-            originalAmbient = _IlIllIIIII.Ambient
-            originalOutdoorAmbient = _IlIllIIIII.OutdoorAmbient
-            _IlIllIIIII.Brightness = 0x2
-            _IlIllIIIII.Ambient = Color3.fromRGB(0xFF, 0xFF, 0xFF)
-            _IlIllIIIII.OutdoorAmbient = Color3.fromRGB(0xFF, 0xFF, 0xFF)
-            _IlIllIIIII.ClockTime = 0xE
-            _IlIllIIIII.FogEnd = 0x186A0
+            originalBrightness = lighting.Brightness
+            originalAmbient = lighting.Ambient
+            originalOutdoorAmbient = lighting.OutdoorAmbient
+            lighting.Brightness = 2
+            lighting.Ambient = Color3.fromRGB(255, 255, 255)
+            lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
+            lighting.ClockTime = 14
+            lighting.FogEnd = 100000
         else
-            if _IIlIlIIlII then _IlIllIIIII.Brightness = _IIlIlIIlII end
-            if originalAmbient then _IlIllIIIII.Ambient = originalAmbient end
-            if originalOutdoorAmbient then _IlIllIIIII.OutdoorAmbient = originalOutdoorAmbient end
+            if originalBrightness then lighting.Brightness = originalBrightness end
+            if originalAmbient then lighting.Ambient = originalAmbient end
+            if originalOutdoorAmbient then lighting.OutdoorAmbient = originalOutdoorAmbient end
         end
     end
 
-    local function _llIllIllII()
-        local _lIIIllllIl = {}
-        local _IIllIIIIlI = {}
-        for name, active in pairs(_lIllIIlIlI) do
-            if active then _IIllIIIIlI[name] = true end
+    local function findOres()
+        local ores = {}
+        local activeOres = {}
+        for name, active in pairs(selectedOres) do
+            if active then activeOres[name] = true end
         end
-        if next(_IIllIIIIlI) == nil then return _lIIIllllIl end
+        if next(activeOres) == nil then return ores end
         for _, obj in ipairs(workspace:GetDescendants()) do
-            if obj:IsA("Model") and _IIllIIIIlI[obj.Name] then
-                local _lIIllIllII = obj.PrimaryPart or obj:FindFirstChildWhichIsA("BasePart")
-                if _lIIllIllII then
-                    local _IlIlIIllII = _lIIllIllII.Position
-                    if _IlIlIIllII.X > -0xBB8 and _IlIlIIllII.Y < 0x1F4 then
-                        table.insert(_lIIIllllIl, {model = obj, _lIIllIllII = _lIIllIllII, name = obj.Name})
+            if obj:IsA("Model") and activeOres[obj.Name] then
+                local part = obj.PrimaryPart or obj:FindFirstChildWhichIsA("BasePart")
+                if part then
+                    local pos = part.Position
+                    if pos.X > -3000 and pos.Y < 500 then
+                        table.insert(ores, {model = obj, part = part, name = obj.Name})
                     end
                 end
             end
         end
-        return _lIIIllllIl
+        return ores
     end
 
-    local function _lllIlIIIlI(oreModel, timeoutSeconds)
-        local _IIIllIIlIl = false
-        local _IlIlIlIIll
-        _IlIlIlIIll = oreModel.AncestryChanged:Connect(function(_, parent)
-            if parent == nil then _IIIllIIlIl = true end
+    local function waitForOreMined(oreModel, timeoutSeconds)
+        local mined = false
+        local connection
+        connection = oreModel.AncestryChanged:Connect(function(_, parent)
+            if parent == nil then mined = true end
         end)
-        local _IIIlIIIIlI = 0x0
-        while not _IIIllIIlIl and _IIIlIIIIlI < timeoutSeconds do
-            if not oreModel or not oreModel.Parent then _IIIllIIlIl = true break end
+        local elapsed = 0
+        while not mined and elapsed < timeoutSeconds do
+            if not oreModel or not oreModel.Parent then mined = true break end
             task.wait(0.1)
-            _IIIlIIIIlI = _IIIlIIIIlI + 0.1
+            elapsed = elapsed + 0.1
         end
-        pcall(function() _IlIlIlIIll:Disconnect() end)
-        return _IIIllIIlIl
+        pcall(function() connection:Disconnect() end)
+        return mined
     end
 
     -- ===================== RAYFIELD UI =====================
-    local _IIIIlllIll = _lllIIlIIll:CreateWindow({
-        Name = "Hyperion",
-        LoadingTitle = "BWCO",
-        LoadingSubtitle = "Made By Phobia",
+    local Window = Rayfield:CreateWindow({
+        Name = "BCO Ore Miner",
+        LoadingTitle = "BCO Ore Miner",
+        LoadingSubtitle = "by phobia",
         Theme = theme,
         DisableRayfieldPrompts = false,
         DisableBuildWarnings = false,
     })
 
-    local _IllIIIlIIl     = _IIIIlllIll:CreateTab("Main", 0x10B3AAE9A)
-    local _IlIIllIllI     = _IIIIlllIll:CreateTab("Mine & Ores", 0x10B3AAE9A)
-    local _lIlIllIllI = _IIIIlllIll:CreateTab("Settings", 0x10B3AAE9A)
+    local MainTab     = Window:CreateTab("🏠 Main", 4483362458)
+    local MineTab     = Window:CreateTab("⛏ Mine & Ores", 4483362458)
+    local SettingsTab = Window:CreateTab("⚙ Settings", 4483362458)
 
     -- ====== MAIN TAB ======
-    _IllIIIlIIl:CreateSection("Welcome")
-    _IllIIIlIIl:CreateLabel("WIP.")
+    MainTab:CreateSection("Welcome")
+    MainTab:CreateLabel("Welcome to BCO Ore Miner by phobia.")
+    MainTab:CreateLabel("More features coming soon.")
 
     -- ====== MINE & ORES TAB ======
-    _IlIIllIllI:CreateSection("Status")
-    local _lIIIlllllI  = _IlIIllIllI:CreateLabel("Status: Ready — select ores below")
-    local _lllIIIIIll = _IlIIllIllI:CreateLabel("Pickaxe: Searching...")
+    MineTab:CreateSection("Status")
+    local statusLabel  = MineTab:CreateLabel("Status: Ready — select ores below")
+    local pickaxeLabel = MineTab:CreateLabel("Pickaxe: Searching...")
 
-    local function _IlIIllIIII(msg) _lIIIlllllI:Set("Status: " .. msg) end
-    local function _IlIIllIlll(msg) _lllIIIIIll:Set("Pickaxe: " .. msg) end
+    local function setStatus(msg) statusLabel:Set("Status: " .. msg) end
+    local function setPickaxeStatus(msg) pickaxeLabel:Set("Pickaxe: " .. msg) end
 
-    _IlIIllIllI:CreateSection("Actions")
+    MineTab:CreateSection("Actions")
 
-    _IlIIllIllI:CreateButton({
+    MineTab:CreateButton({
         Name = "Teleport to Nearest Ore",
         Callback = function()
-            local _lIIIllllIl = _llIllIllII()
-            if #_lIIIllllIl == 0x0 then
-                _lllIIlIIll:Notify({ Title = "No Ores", Content = "No selected ores found!", Duration = 0x3 })
+            local ores = findOres()
+            if #ores == 0 then
+                Rayfield:Notify({ Title = "No Ores", Content = "No selected ores found!", Duration = 3 })
                 return
             end
-            local _IIIlIIllll = _IIlllllIll.Character
-            if not _IIIlIIllll or not _IIIlIIllll:FindFirstChild("HumanoidRootPart") then return end
-            local _IlIlIIllII = _IIIlIIllll.HumanoidRootPart.Position
-            local _lllllIllII, dist, nName = nil, math.huge, ""
-            for _, _llIllIIIIl in ipairs(_lIIIllllIl) do
-                local _IIlIlllllI = (_llIllIIIIl.part.Position - _IlIlIIllII).Magnitude
-                if _IIlIlllllI < dist then _lllllIllII = _llIllIIIIl dist = _IIlIlllllI nName = _llIllIIIIl.name end
+            local char = LocalPlayer.Character
+            if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+            local pos = char.HumanoidRootPart.Position
+            local nearest, dist, nName = nil, math.huge, ""
+            for _, ore in ipairs(ores) do
+                local d = (ore.part.Position - pos).Magnitude
+                if d < dist then nearest = ore dist = d nName = ore.name end
             end
-            if _lllllIllII then
-                _IIlIllllll(_lllllIllII.part)
-                local _IIlIllllII = _lIIlllIIlI()
-                if _IIlIllllII then _IlIIllIlll(_IIlIllllII.Name .. " equipped") end
-                _IlIIllIIII(nName .. " (" .. math.floor(dist) .. " studs)")
-                _lllIIlIIll:Notify({ Title = "Teleported!", Content = nName .. " — " .. math.floor(dist) .. " studs away", Duration = 0x2 })
+            if nearest then
+                teleportToSide(nearest.part)
+                local t = equipPickaxe()
+                if t then setPickaxeStatus(t.Name .. " equipped") end
+                setStatus(nName .. " (" .. math.floor(dist) .. " studs)")
+                Rayfield:Notify({ Title = "Teleported!", Content = nName .. " — " .. math.floor(dist) .. " studs away", Duration = 2 })
             end
         end,
     })
 
-    _IlIIllIllI:CreateButton({
+    MineTab:CreateButton({
         Name = "Teleport to Next Ore",
         Callback = function()
-            local _lIIIllllIl = _llIllIllII()
-            if #_lIIIllllIl == 0x0 then
-                _lllIIlIIll:Notify({ Title = "No Ores", Content = "No selected ores found!", Duration = 0x3 })
+            local ores = findOres()
+            if #ores == 0 then
+                Rayfield:Notify({ Title = "No Ores", Content = "No selected ores found!", Duration = 3 })
                 return
             end
-            if _IlllllIlIl > #_lIIIllllIl then _IlllllIlIl = 0x1 end
-            local _llIllIIIIl = _lIIIllllIl[_IlllllIlIl]
-            _IIlIllllll(_llIllIIIIl.part)
-            local _IIlIllllII = _lIIlllIIlI()
-            if _IIlIllllII then _IlIIllIlll(_IIlIllllII.Name .. " equipped") end
-            _IlIIllIIII(_llIllIIIIl.name .. " " .. _IlllllIlIl .. "/" .. #_lIIIllllIl)
-            _lllIIlIIll:Notify({ Title = "Teleported!", Content = _llIllIIIIl.name .. " (" .. _IlllllIlIl .. "/" .. #_lIIIllllIl .. ")", Duration = 0x2 })
-            _IlllllIlIl = _IlllllIlIl + 0x1
+            if currentIndex > #ores then currentIndex = 1 end
+            local ore = ores[currentIndex]
+            teleportToSide(ore.part)
+            local t = equipPickaxe()
+            if t then setPickaxeStatus(t.Name .. " equipped") end
+            setStatus(ore.name .. " " .. currentIndex .. "/" .. #ores)
+            Rayfield:Notify({ Title = "Teleported!", Content = ore.name .. " (" .. currentIndex .. "/" .. #ores .. ")", Duration = 2 })
+            currentIndex = currentIndex + 1
         end,
     })
 
-    _IlIIllIllI:CreateButton({
+    MineTab:CreateButton({
         Name = "Count Selected Ores",
         Callback = function()
-            local _lIIIllllIl = _llIllIllII()
-            _lllIIlIIll:Notify({ Title = "Ore Count", Content = "Found " .. #_lIIIllllIl .. " ore(s) in the caverns.", Duration = 0x3 })
-            _IlIIllIIII("Found " .. #_lIIIllllIl .. " ore(s)")
+            local ores = findOres()
+            Rayfield:Notify({ Title = "Ore Count", Content = "Found " .. #ores .. " ore(s) in the caverns.", Duration = 3 })
+            setStatus("Found " .. #ores .. " ore(s)")
         end,
     })
 
-    _IlIIllIllI:CreateButton({
+    MineTab:CreateButton({
         Name = "Reset Ore Index",
         Callback = function()
-            _IlllllIlIl = 0x1
-            _IlIIllIIII("Index reset to 1")
-            _lllIIlIIll:Notify({ Title = "Reset", Content = "Ore index reset to 1.", Duration = 0x2 })
+            currentIndex = 1
+            setStatus("Index reset to 1")
+            Rayfield:Notify({ Title = "Reset", Content = "Ore index reset to 1.", Duration = 2 })
         end,
     })
 
-    _IlIIllIllI:CreateSection("Auto Farm")
+    MineTab:CreateSection("Auto Farm")
 
-    _IlIIllIllI:CreateToggle({
+    MineTab:CreateToggle({
         Name = "Auto Farm",
         CurrentValue = false,
         Flag = "AutoFarm",
         Callback = function(val)
-            _lIIllIIIIl = val
+            autoFarming = val
             if val then
-                _IlIIllIIII("Auto farming...")
-                _lllIIlIIll:Notify({ Title = "Auto Farm ON", Content = "Farming selected ores.", Duration = 0x3 })
+                setStatus("Auto farming...")
+                Rayfield:Notify({ Title = "Auto Farm ON", Content = "Farming selected ores.", Duration = 3 })
                 task.spawn(function()
-                    while _lIIllIIIIl do
-                        local _lIIIllllIl = _llIllIllII()
-                        if #_lIIIllllIl == 0x0 then
-                            _IIIIIIIIlI()
-                            _IlIIllIIII("No ores found — waiting...")
-                            task.wait(0x2)
+                    while autoFarming do
+                        local ores = findOres()
+                        if #ores == 0 then
+                            stopMining()
+                            setStatus("No ores found — waiting...")
+                            task.wait(2)
                         else
-                            if _IlllllIlIl > #_lIIIllllIl then _IlllllIlIl = 0x1 end
-                            local _llIllIIIIl = _lIIIllllIl[_IlllllIlIl]
-                            _IlllllIlIl = _IlllllIlIl + 0x1
-                            _IIlIllllll(_llIllIIIIl.part)
-                            _IlIIllIIII("Mining " .. _llIllIIIIl.name .. " " .. (_IlllllIlIl-0x1) .. "/" .. #_lIIIllllIl)
-                            local _IlIlIlIIlI = _lIIlllIIlI()
-                            if not _IlIlIlIIlI then
-                                _IlIIllIlll("No pickaxe found!")
-                                task.wait(0x1)
+                            if currentIndex > #ores then currentIndex = 1 end
+                            local ore = ores[currentIndex]
+                            currentIndex = currentIndex + 1
+                            teleportToSide(ore.part)
+                            setStatus("Mining " .. ore.name .. " " .. (currentIndex-1) .. "/" .. #ores)
+                            local tool = equipPickaxe()
+                            if not tool then
+                                setPickaxeStatus("No pickaxe found!")
+                                task.wait(1)
                                 continue
                             end
-                            _IlIIllIlll(_IlIlIlIIlI.Name .. " equipped")
+                            setPickaxeStatus(tool.Name .. " equipped")
                             task.wait(0.3)
-                            _lIlllIIlll(_IlIlIlIIlI)
-                            local _IIIllIIlIl = _lllIlIIIlI(_llIllIIIIl.model, 0x3C)
-                            _IIIIIIIIlI()
-                            if _IIIllIIlIl then
-                                _IlIIllIIII("Mined! Moving to next...")
+                            startMining(tool)
+                            local mined = waitForOreMined(ore.model, 60)
+                            stopMining()
+                            if mined then
+                                setStatus("Mined! Moving to next...")
                             else
-                                _IlIIllIIII("Timeout — skipping ore...")
+                                setStatus("Timeout — skipping ore...")
                             end
                             task.wait(0.2)
                         end
                     end
-                    _IIIIIIIIlI()
+                    stopMining()
                 end)
             else
-                _IIIIIIIIlI()
-                _IlIIllIIII("Auto farm stopped")
-                _lllIIlIIll:Notify({ Title = "Auto Farm OFF", Content = "Stopped.", Duration = 0x2 })
+                stopMining()
+                setStatus("Auto farm stopped")
+                Rayfield:Notify({ Title = "Auto Farm OFF", Content = "Stopped.", Duration = 2 })
             end
         end,
     })
 
-    _IlIIllIllI:CreateSection("Visual")
+    MineTab:CreateSection("Visual")
 
-    _IlIIllIllI:CreateToggle({
+    MineTab:CreateToggle({
         Name = "Fullbright",
-        CurrentValue = _lIllIllIIl,
+        CurrentValue = fullbrightEnabled,
         Flag = "Fullbright",
         Callback = function(val)
-            _lIllIllIIl = val
-            _lIIIIllIIl(val)
-            _lllIIlIIll:Notify({
+            fullbrightEnabled = val
+            setFullbright(val)
+            Rayfield:Notify({
                 Title = val and "Fullbright ON" or "Fullbright OFF",
                 Content = val and "Lighting maximised." or "Lighting restored.",
-                Duration = 0x2,
+                Duration = 2,
             })
         end,
     })
 
-    _IlIIllIllI:CreateSection("Ore Selection")
+    MineTab:CreateSection("Ore Selection")
 
-    _IlIIllIllI:CreateButton({
+    MineTab:CreateButton({
         Name = "Select All Ores",
         Callback = function()
-            for _, oreName in ipairs(_lIIIIIlIll) do
-                _lIllIIlIlI[oreName] = true
-                if _IIIlIlIIlI[oreName] then _IIIlIlIIlI[oreName]:Set(true) end
+            for _, oreName in ipairs(oreList) do
+                selectedOres[oreName] = true
+                if oreToggles[oreName] then oreToggles[oreName]:Set(true) end
             end
-            _lllIIlIIll:Notify({ Title = "Selected All", Content = #_lIIIIIlIll .. " ore types selected.", Duration = 0x2 })
-            _IlIIllIIII(#_lIIIIIlIll .. " ore types selected")
+            Rayfield:Notify({ Title = "Selected All", Content = #oreList .. " ore types selected.", Duration = 2 })
+            setStatus(#oreList .. " ore types selected")
         end,
     })
 
-    _IlIIllIllI:CreateButton({
+    MineTab:CreateButton({
         Name = "Deselect All Ores",
         Callback = function()
-            for _, oreName in ipairs(_lIIIIIlIll) do
-                _lIllIIlIlI[oreName] = false
-                if _IIIlIlIIlI[oreName] then _IIIlIlIIlI[oreName]:Set(false) end
+            for _, oreName in ipairs(oreList) do
+                selectedOres[oreName] = false
+                if oreToggles[oreName] then oreToggles[oreName]:Set(false) end
             end
-            _lllIIlIIll:Notify({ Title = "Deselected All", Content = "All ores deselected.", Duration = 0x2 })
-            _IlIIllIIII("Ready — select ores to begin")
+            Rayfield:Notify({ Title = "Deselected All", Content = "All ores deselected.", Duration = 2 })
+            setStatus("Ready — select ores to begin")
         end,
     })
 
-    for _, oreName in ipairs(_lIIIIIlIll) do
-        local _lIIIlIllll = _IlIIllIllI:CreateToggle({
+    for _, oreName in ipairs(oreList) do
+        local toggle = MineTab:CreateToggle({
             Name = oreName,
-            CurrentValue = _lIllIIlIlI[oreName] or false,
+            CurrentValue = selectedOres[oreName] or false,
             Flag = "Ore_" .. oreName,
             Callback = function(val)
-                _lIllIIlIlI[oreName] = val
-                local _IlIIIIlIlI = 0x0
-                for _, v in pairs(_lIllIIlIlI) do if v then _IlIIIIlIlI = _IlIIIIlIlI + 0x1 end end
-                _IlIIllIIII(_IlIIIIlIlI .. " ore type(s) selected")
+                selectedOres[oreName] = val
+                local count = 0
+                for _, v in pairs(selectedOres) do if v then count = count + 1 end end
+                setStatus(count .. " ore type(s) selected")
             end,
         })
-        _IIIlIlIIlI[oreName] = _lIIIlIllll
+        oreToggles[oreName] = toggle
     end
 
     -- ====== SETTINGS TAB ======
-    _lIlIllIllI:CreateSection("Theme")
-    _lIlIllIllI:CreateLabel("Current theme: " .. theme)
+    SettingsTab:CreateSection("Theme")
+    SettingsTab:CreateLabel("Current theme: " .. theme)
 
-    _lIlIllIllI:CreateDropdown({
+    SettingsTab:CreateDropdown({
         Name = "Select Theme",
         Options = {"Default", "Amethyst", "Bloom", "Ocean", "Solar"},
         CurrentOption = {theme},
         Flag = "ThemeDropdown",
         Callback = function(option)
-            local _llIlIIllII = option[0x1] or option
-            if _llIlIIllII ~= theme then
-                _lIllIIIlIl = _llIlIIllII
+            local chosen = option[1] or option
+            if chosen ~= theme then
+                ThemeChoice = chosen
                 -- Destroy old UI and reload with new theme
-                _lllIIlIIll:Destroy()
+                Rayfield:Destroy()
                 task.wait(0.3)
-                _lIIlIIIlII(_llIlIIllII)
+                loadScript(chosen)
             end
         end,
     })
 
-    _lIlIllIllI:CreateSection("Credits")
-    _lIlIllIllI:CreateLabel("Hyperion — Made By Phobia")
-    _lIlIllIllI:CreateLabel("Version 1.0")
+    SettingsTab:CreateSection("Credits")
+    SettingsTab:CreateLabel("BCO Ore Miner — by phobia")
+    SettingsTab:CreateLabel("Version 1.0")
 
     -- Init
-    local _IIlIllllII = _lIIlIlIlII()
-    if _IIlIllllII then _IlIIllIlll(_IIlIllllII.Name .. " detected") else _IlIIllIlll("No pickaxe in backpack") end
+    local t = findPickaxe()
+    if t then setPickaxeStatus(t.Name .. " detected") else setPickaxeStatus("No pickaxe in backpack") end
 
-    _lllIIlIIll:Notify({
-        Title = "",
-        Content = "Theme: " .. theme .. " — Made By Phobia",
-        Duration = 0x4,
-        Image = 0x10B3AAE9A,
+    Rayfield:Notify({
+        Title = "BCO Ore Miner",
+        Content = "Theme: " .. theme .. " — by phobia",
+        Duration = 4,
+        Image = 4483362458,
     })
 end
 
-_lIIlIIIlII(_lIllIIIlIl)
- end)(...)
+loadScript(ThemeChoice)
